@@ -79,7 +79,7 @@ func ErrorHandler(err error, c echo.Context) {
 				c.Logger().Error(err.Error())
 			}
 		} else {
-			err := c.JSON(code, newHTTPError(code, key, msg))
+			err := c.JSON(code, New(code, key, msg))
 			if err != nil {
 				c.Logger().Error(err.Error())
 			}
