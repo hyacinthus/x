@@ -1,6 +1,7 @@
 module github.com/hyacinthus/x
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-redis/cache v6.3.5+incompatible
 	github.com/go-redis/redis v6.14.2+incompatible
 	github.com/jinzhu/gorm v1.9.2
