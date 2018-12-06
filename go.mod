@@ -6,7 +6,10 @@ require (
 	github.com/go-redis/redis v6.14.2+incompatible
 	github.com/jinzhu/gorm v1.9.2
 	github.com/jinzhu/inflection v0.0.0-20180308033659-04140366298a // indirect
-	github.com/labstack/echo v0.0.0-20181130002821-a8de73efbeae
+	github.com/labstack/echo v0.0.0-20181205161348-3f8b45c8d0dd
+	github.com/labstack/gommon v0.2.8 // indirect
 	github.com/sirupsen/logrus v1.2.0
 	github.com/vmihailenco/msgpack v4.0.1+incompatible
+	golang.org/x/crypto v0.0.0-20181203042331-505ab145d0a9 // indirect
+	golang.org/x/sys v0.0.0-20181206074257-70b957f3b65e // indirect
 )

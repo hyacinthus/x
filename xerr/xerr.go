@@ -57,7 +57,7 @@ func ErrorHandler(err error, c echo.Context) {
 		// echo 框架的错误
 		code = ee.Code
 		key = http.StatusText(code)
-		msg = key
+		msg = ee.Error()
 	} else if err == gorm.ErrRecordNotFound {
 		// 我们将 gorm 的没有找到直接返回 404
 		code = http.StatusNotFound
