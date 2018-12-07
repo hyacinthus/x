@@ -5,6 +5,7 @@ import (
 
 	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo"
+	"github.com/mozillazg/go-cos"
 )
 
 // 定义错误
@@ -58,6 +59,11 @@ func ErrorHandler(err error, c echo.Context) {
 		code = ee.Code
 		key = http.StatusText(code)
 		msg = ee.Error()
+	} else if ee, ok := err.(*cos.ErrorResponse); ok {
+		// 腾讯云 cos 错误
+		code = ee.Response.StatusCode
+		key = ee.Code
+		msg = ee.Message
 	} else if err == gorm.ErrRecordNotFound {
 		// 我们将 gorm 的没有找到直接返回 404
 		code = http.StatusNotFound
