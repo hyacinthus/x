@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 
 	"github.com/mozillazg/go-cos"
 )
@@ -31,8 +30,8 @@ func New(config *Config) *Client {
 		config.Bucket, config.AppID, config.Region))
 	c := cos.NewClient(b, &http.Client{
 		Transport: &cos.AuthorizationTransport{
-			SecretID:  os.Getenv(config.SecretID),
-			SecretKey: os.Getenv(config.SecretKey),
+			SecretID:  config.SecretID,
+			SecretKey: config.SecretKey,
 		},
 	})
 	return &Client{
