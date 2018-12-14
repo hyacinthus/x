@@ -10,6 +10,7 @@ require (
 	github.com/labstack/gommon v0.2.8 // indirect
 	github.com/mozillazg/go-cos v0.10.0
 	github.com/sirupsen/logrus v1.2.0
+	github.com/tencentyun/cos-go-sdk-v5 v0.0.0-20181213100331-bd54f9e1350e
 	github.com/vmihailenco/msgpack v4.0.1+incompatible
 	golang.org/x/crypto v0.0.0-20181203042331-505ab145d0a9 // indirect
 	golang.org/x/sys v0.0.0-20181206074257-70b957f3b65e // indirect

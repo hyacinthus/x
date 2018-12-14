@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 
-	"github.com/mozillazg/go-cos"
+	"github.com/tencentyun/cos-go-sdk-v5"
 )
 
 // Config 腾讯云 COS 配置
@@ -26,8 +27,9 @@ type Client struct {
 
 // New 新建 cos 客户端
 func New(config *Config) *Client {
-	b, _ := cos.NewBaseURL(fmt.Sprintf("http://%s-%s.cos.%s.myqcloud.com",
+	u, _ := url.Parse(fmt.Sprintf("https://%s-%s.cos.%s.myqcloud.com",
 		config.Bucket, config.AppID, config.Region))
+	b := &cos.BaseURL{BucketURL: u}
 	c := cos.NewClient(b, &http.Client{
 		Transport: &cos.AuthorizationTransport{
 			SecretID:  config.SecretID,
