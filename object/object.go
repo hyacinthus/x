@@ -27,7 +27,7 @@ type Client struct {
 
 // New 新建 cos 客户端
 func New(config *Config) *Client {
-	u, _ := url.Parse(fmt.Sprintf("https://%s-%s.cos.%s.myqcloud.com",
+	u, _ := url.Parse(fmt.Sprintf("http://%s-%s.cos.%s.myqcloud.com",
 		config.Bucket, config.AppID, config.Region))
 	b := &cos.BaseURL{BucketURL: u}
 	c := cos.NewClient(b, &http.Client{
