@@ -5,13 +5,14 @@ import (
 
 	"github.com/go-redis/cache"
 	"github.com/go-redis/redis"
-	"github.com/sirupsen/logrus"
+	"github.com/hyacinthus/x/xlog"
 	"github.com/vmihailenco/msgpack"
 )
 
 var (
 	codec *cache.Codec
 	rdb   *redis.Client
+	log   = xlog.Get()
 )
 
 // Init 用一个 redis 连接初始化缓存
@@ -31,7 +32,7 @@ func Init(client *redis.Client) {
 // Set 写缓存
 func Set(key string, object interface{}, exp time.Duration) {
 	if codec == nil {
-		logrus.Panic("init cache with cc.Init(rdb) first")
+		log.Panic("init cache with cc.Init(rdb) first")
 	}
 	err := codec.Set(&cache.Item{
 		Key:        key,
@@ -39,7 +40,7 @@ func Set(key string, object interface{}, exp time.Duration) {
 		Expiration: exp,
 	})
 	if err != nil {
-		logrus.WithError(err).WithField("key", key).Error("set cache faild")
+		log.WithError(err).WithField("key", key).Error("set cache faild")
 	}
 }
 
@@ -58,7 +59,7 @@ func Delete(key string) {
 	}
 	err := codec.Delete(key)
 	if err != nil {
-		logrus.WithError(err).WithField("key", key).Error("delete cache faild")
+		log.WithError(err).WithField("key", key).Error("delete cache faild")
 	}
 }
 
@@ -68,17 +69,17 @@ func Clean(cate string) {
 		panic("init cache with cc.Init(rdb) first")
 	}
 	if cate == "" {
-		logrus.Error("someone try to clean all cache keys")
+		log.Error("someone try to clean all cache keys")
 		return
 	}
 	i := 0
 	for _, key := range rdb.Keys(cate + "*").Val() {
 		err := codec.Delete(key)
 		if err != nil {
-			logrus.WithError(err).WithField("key", key).Error("delete cache faild,stop batch delete")
+			log.WithError(err).WithField("key", key).Error("delete cache faild,stop batch delete")
 			break
 		}
 		i++
 	}
-	logrus.Infof("delete %d %s cache", i, cate)
+	log.Infof("delete %d %s cache", i, cate)
 }
