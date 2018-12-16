@@ -1,10 +1,12 @@
 package xnsq
 
 import (
+	"github.com/hyacinthus/x/xlog"
 	nsq "github.com/nsqio/go-nsq"
 	"github.com/sirupsen/logrus"
 )
 
+var log = xlog.Get()
 var nsqdAddr, nsqLookupdAddr string
 
 // Init 初始化nsq相关地址
@@ -22,7 +24,7 @@ func Producer() *nsq.Producer {
 		logrus.WithError(err).Panic("init nsq producer failed")
 	}
 	producer.SetLogger(NewLogrusLoggerAtLevel(logrus.WarnLevel))
-	logrus.Info("NSQ Producer 初始化完成。")
+	log.Info("NSQ Producer 初始化完成。")
 	return producer
 }
 
@@ -30,13 +32,13 @@ func Producer() *nsq.Producer {
 func Reg(topic, channel string, handler nsq.HandlerFunc) {
 	q, err := nsq.NewConsumer(topic, channel, nsq.NewConfig())
 	if err != nil {
-		logrus.WithError(err).Panic("init nsq comsumer failed")
+		log.WithError(err).Panic("init nsq comsumer failed")
 	}
 	q.SetLogger(NewLogrusLoggerAtLevel(logrus.WarnLevel))
 	q.AddHandler(handler)
 	err = q.ConnectToNSQLookupd(nsqLookupdAddr)
 	if err != nil {
-		logrus.WithError(err).Panic("nsq comsumer connect to lookupd failed")
+		log.WithError(err).Panic("nsq comsumer connect to lookupd failed")
 	}
-	logrus.Infof("订阅 nsq topic %s at %s", topic, channel)
+	log.Infof("订阅 nsq topic %s at %s", topic, channel)
 }

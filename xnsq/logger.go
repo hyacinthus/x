@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	nsq "github.com/nsqio/go-nsq"
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 )
 
 var (
@@ -25,17 +25,17 @@ func NewLogrusLogger() (logger LogrusLogger, level nsq.LogLevel) {
 }
 
 // NewLogrusLoggerAtLevel returns a new LogrusLogger with the provided log level mapped to nsq.LogLevel for easily plugging into nsq.SetLogger.
-func NewLogrusLoggerAtLevel(l log.Level) (logger LogrusLogger, level nsq.LogLevel) {
+func NewLogrusLoggerAtLevel(l logrus.Level) (logger LogrusLogger, level nsq.LogLevel) {
 	logger = LogrusLogger{}
 	level = nsq.LogLevelWarning
 	switch l {
-	case log.DebugLevel:
+	case logrus.DebugLevel:
 		level = nsq.LogLevelDebug
-	case log.InfoLevel:
+	case logrus.InfoLevel:
 		level = nsq.LogLevelInfo
-	case log.WarnLevel:
+	case logrus.WarnLevel:
 		level = nsq.LogLevelWarning
-	case log.ErrorLevel:
+	case logrus.ErrorLevel:
 		level = nsq.LogLevelError
 	}
 	return
