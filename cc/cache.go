@@ -52,6 +52,11 @@ func Get(key string, pointer interface{}) error {
 	return codec.Get(key, pointer)
 }
 
+// Exists 是否存在
+func Exists(key string) bool {
+	return rdb.Exists(key).Val() != 0
+}
+
 // Delete 清缓存
 func Delete(key string) {
 	if codec == nil {
