@@ -8,6 +8,125 @@ import (
 	"strings"
 )
 
+const (
+	imgprefix  = "https://image.xuebaox.com/"
+	fileprefix = "https://static.xuebaox.com/"
+)
+
+// ImageURL ===============图片链接===============
+type ImageURL string
+
+// String 转换为string类型
+func (f ImageURL) String() string {
+	s := string(f)
+	var url = s
+	if !strings.HasPrefix(s, "http") {
+		url = imgprefix + s
+	}
+	return url
+}
+
+// IsEmpty 是否为空
+func (f ImageURL) IsEmpty() bool {
+	s := string(f)
+	if s == "" {
+		return true
+	}
+	return false
+}
+
+// MarshalJSON 转换为json类型 加域名
+func (f ImageURL) MarshalJSON() ([]byte, error) {
+	return json.Marshal(f.String())
+}
+
+// UnmarshalJSON 不做处理
+func (f *ImageURL) UnmarshalJSON(data []byte) error {
+	var tmp string
+	if err := json.Unmarshal(data, &tmp); err != nil {
+		return err
+	}
+	tmp = strings.TrimPrefix(tmp, imgprefix)
+	*f = ImageURL(tmp)
+	return nil
+}
+
+// Scan implements the Scanner interface.
+func (f *ImageURL) Scan(src interface{}) error {
+	if src == nil {
+		*f = ""
+		return nil
+	}
+	tmp, ok := src.([]byte)
+	if !ok {
+		return errors.New("Read file url data from DB failed")
+	}
+	*f = ImageURL(tmp)
+	return nil
+}
+
+// Value implements the driver Valuer interface.
+func (f ImageURL) Value() (driver.Value, error) {
+	return string(f), nil
+}
+
+// FileURL ================文件链接================
+type FileURL string
+
+// String 转换为string类型
+func (f FileURL) String() string {
+	s := string(f)
+	var url = s
+	if !strings.HasPrefix(s, "http") {
+		url = fileprefix + s
+	}
+	return url
+}
+
+// IsEmpty 是否为空
+func (f FileURL) IsEmpty() bool {
+	s := string(f)
+	if s == "" {
+		return true
+	}
+	return false
+}
+
+// MarshalJSON 转换为json类型 加域名
+func (f FileURL) MarshalJSON() ([]byte, error) {
+	return json.Marshal(f.String())
+}
+
+// UnmarshalJSON 不做处理
+func (f *FileURL) UnmarshalJSON(data []byte) error {
+	var tmp string
+	if err := json.Unmarshal(data, &tmp); err != nil {
+		return err
+	}
+	tmp = strings.TrimPrefix(tmp, fileprefix)
+	*f = FileURL(tmp)
+	return nil
+}
+
+// Scan implements the Scanner interface.
+func (f *FileURL) Scan(src interface{}) error {
+	if src == nil {
+		*f = ""
+		return nil
+	}
+	tmp, ok := src.([]byte)
+	if !ok {
+		return errors.New("Read file url data from DB failed")
+	}
+	*f = FileURL(tmp)
+	return nil
+}
+
+// Value implements the driver Valuer interface.
+func (f FileURL) Value() (driver.Value, error) {
+	return string(f), nil
+}
+
 // Strings ===========字符串列表===========
 type Strings []string
 
