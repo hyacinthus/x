@@ -17,4 +17,5 @@ require (
 	github.com/vmihailenco/msgpack v4.0.1+incompatible
 	golang.org/x/crypto v0.0.0-20181203042331-505ab145d0a9 // indirect
 	golang.org/x/sys v0.0.0-20181206074257-70b957f3b65e // indirect
+	gopkg.in/yaml.v2 v2.2.2
 )

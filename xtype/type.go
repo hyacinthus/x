@@ -6,6 +6,8 @@ import (
 	"errors"
 	"strconv"
 	"strings"
+
+	yaml "gopkg.in/yaml.v2"
 )
 
 const (
@@ -136,7 +138,7 @@ func (t Strings) String() string {
 	return strings.Join(s, ",")
 }
 
-// MarshalJSON 转换为json类型 加域名
+// MarshalJSON 转换为json类型
 func (t Strings) MarshalJSON() ([]byte, error) {
 	return json.Marshal([]string(t))
 }
@@ -145,6 +147,21 @@ func (t Strings) MarshalJSON() ([]byte, error) {
 func (t *Strings) UnmarshalJSON(data []byte) error {
 	var tmp []string
 	if err := json.Unmarshal(data, &tmp); err != nil {
+		return err
+	}
+	*t = Strings(tmp)
+	return nil
+}
+
+// MarshalYAML 转换为json类型
+func (t Strings) MarshalYAML() ([]byte, error) {
+	return yaml.Marshal([]string(t))
+}
+
+// UnmarshalYAML 不做处理
+func (t *Strings) UnmarshalYAML(data []byte) error {
+	var tmp []string
+	if err := yaml.Unmarshal(data, &tmp); err != nil {
 		return err
 	}
 	*t = Strings(tmp)
