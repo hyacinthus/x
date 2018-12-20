@@ -3,11 +3,12 @@ package object
 import (
 	"context"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 
-	"github.com/tencentyun/cos-go-sdk-v5"
+	cos "github.com/tencentyun/cos-go-sdk-v5"
 )
 
 // Config 腾讯云 COS 配置
@@ -54,4 +55,22 @@ func (c *Client) Get(key string) ([]byte, error) {
 	}
 	resp.Body.Close()
 	return bs, nil
+}
+
+// Put 写文件
+func (c *Client) Put(key string, f io.Reader) error {
+	opt := &cos.ObjectPutOptions{
+		ObjectPutHeaderOptions: &cos.ObjectPutHeaderOptions{
+			ContentType: "text/markdown",
+		},
+		ACLHeaderOptions: &cos.ACLHeaderOptions{
+			//XCosACL: "public-read",
+			XCosACL: "private",
+		},
+	}
+	_, err := c.client.Object.Put(context.Background(), key, f, opt)
+	if err != nil {
+		return err
+	}
+	return nil
 }
