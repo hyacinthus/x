@@ -134,12 +134,18 @@ type Strings []string
 
 // String 转换为string类型
 func (t Strings) String() string {
+	if t == nil {
+		return ""
+	}
 	var s = []string(t)
 	return strings.Join(s, ",")
 }
 
 // MarshalJSON 转换为json类型
 func (t Strings) MarshalJSON() ([]byte, error) {
+	if t == nil {
+		return []byte("null"), nil
+	}
 	return json.Marshal([]string(t))
 }
 
@@ -155,6 +161,9 @@ func (t *Strings) UnmarshalJSON(data []byte) error {
 
 // MarshalYAML 转换为json类型
 func (t Strings) MarshalYAML() ([]byte, error) {
+	if t == nil {
+		return []byte{}, nil
+	}
 	return yaml.Marshal([]string(t))
 }
 
@@ -170,10 +179,10 @@ func (t *Strings) UnmarshalYAML(data []byte) error {
 
 // Scan implements the Scanner interface.
 func (t *Strings) Scan(src interface{}) error {
-	*t = make([]string, 0)
 	if src == nil {
 		return nil
 	}
+	*t = make([]string, 0)
 	tmp, ok := src.([]byte)
 	if !ok {
 		return errors.New("Read tags from DB failed")
@@ -187,6 +196,9 @@ func (t *Strings) Scan(src interface{}) error {
 
 // Value implements the driver Valuer interface.
 func (t Strings) Value() (driver.Value, error) {
+	if t == nil {
+		return nil, nil
+	}
 	return t.String(), nil
 }
 
@@ -195,6 +207,9 @@ type Numbers []int
 
 // String 转换为string类型
 func (t Numbers) String() string {
+	if t == nil {
+		return ""
+	}
 	var s = []int(t)
 	var ns []string
 	for _, i := range s {
@@ -205,6 +220,9 @@ func (t Numbers) String() string {
 
 // MarshalJSON 转换为json类型 加域名
 func (t Numbers) MarshalJSON() ([]byte, error) {
+	if t == nil {
+		return []byte("null"), nil
+	}
 	return json.Marshal([]int(t))
 }
 
@@ -220,10 +238,10 @@ func (t *Numbers) UnmarshalJSON(data []byte) error {
 
 // Scan implements the Scanner interface.
 func (t *Numbers) Scan(src interface{}) error {
-	*t = make([]int, 0)
 	if src == nil {
 		return nil
 	}
+	*t = make([]int, 0)
 	tmp, ok := src.([]byte)
 	if !ok {
 		return errors.New("Read tags from DB failed")
@@ -241,5 +259,8 @@ func (t *Numbers) Scan(src interface{}) error {
 
 // Value implements the driver Valuer interface.
 func (t Numbers) Value() (driver.Value, error) {
+	if t == nil {
+		return nil, nil
+	}
 	return t.String(), nil
 }
