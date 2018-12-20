@@ -74,3 +74,12 @@ func (c *Client) Put(key string, f io.Reader) error {
 	}
 	return nil
 }
+
+// Delete 删除文件
+func (c *Client) Delete(key string) error {
+	_, err := c.client.Object.Delete(context.Background(), key)
+	if err != nil {
+		return err
+	}
+	return nil
+}
