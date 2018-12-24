@@ -16,7 +16,7 @@ type Entity struct {
 	// 最后更新时间
 	UpdatedAt time.Time `json:"updated_at"`
 	// 软删除
-	DeletedAt *time.Time `json:"-"`
+	DeletedAt *time.Time `json:"-" gorm:"index"`
 }
 
 // BeforeCreate GORM hook
