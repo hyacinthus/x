@@ -1,11 +1,12 @@
 package xerr
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo"
-	"github.com/mozillazg/go-cos"
+	cos "github.com/mozillazg/go-cos"
 )
 
 // 定义错误
@@ -58,7 +59,7 @@ func ErrorHandler(err error, c echo.Context) {
 		// echo 框架的错误
 		code = ee.Code
 		key = http.StatusText(code)
-		msg = ee.Error()
+		msg = fmt.Sprintf("%v", ee.Message)
 	} else if ee, ok := err.(*cos.ErrorResponse); ok {
 		// 腾讯云 cos 错误
 		code = ee.Response.StatusCode
