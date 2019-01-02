@@ -141,6 +141,16 @@ func (t Strings) String() string {
 	return strings.Join(s, ",")
 }
 
+// Exists 元素是否存在
+func (t Strings) Exists(s string) bool {
+	for _, item := range t {
+		if item == s {
+			return true
+		}
+	}
+	return false
+}
+
 // MarshalJSON 转换为json类型
 func (t Strings) MarshalJSON() ([]byte, error) {
 	if t == nil {
@@ -216,6 +226,16 @@ func (t Numbers) String() string {
 		ns = append(ns, strconv.Itoa(i))
 	}
 	return strings.Join(ns, ",")
+}
+
+// Exists 元素是否存在
+func (t Numbers) Exists(s int) bool {
+	for _, item := range t {
+		if item == s {
+			return true
+		}
+	}
+	return false
 }
 
 // MarshalJSON 转换为json类型 加域名
