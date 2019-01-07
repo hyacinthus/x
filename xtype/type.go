@@ -21,6 +21,9 @@ type ImageURL string
 // String 转换为string类型
 func (f ImageURL) String() string {
 	s := string(f)
+	if s == "" {
+		return ""
+	}
 	var url = s
 	if !strings.HasPrefix(s, "http") {
 		url = imgprefix + s
@@ -78,6 +81,9 @@ type FileURL string
 // String 转换为string类型
 func (f FileURL) String() string {
 	s := string(f)
+	if s == "" {
+		return ""
+	}
 	var url = s
 	if !strings.HasPrefix(s, "http") {
 		url = fileprefix + s
