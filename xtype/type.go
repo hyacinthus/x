@@ -157,6 +157,18 @@ func (t Strings) Exists(s string) bool {
 	return false
 }
 
+// Intersectant 是否有交集
+func (t Strings) Intersectant(s Strings) bool {
+	for _, tt := range t {
+		for _, ss := range s {
+			if tt == ss {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 // MarshalJSON 转换为json类型
 func (t Strings) MarshalJSON() ([]byte, error) {
 	if t == nil {
