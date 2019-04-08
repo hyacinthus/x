@@ -2,7 +2,7 @@ package auth
 
 import (
 	"github.com/dgrijalva/jwt-go"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 // ParseJWT 在 echo 的 jwt 插件验证完成后，解析我们需要的数据存储到 context

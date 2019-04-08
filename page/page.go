@@ -4,7 +4,7 @@ import (
 	"strconv"
 
 	"github.com/hyacinthus/x/xerr"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 // Middleware 获得页码，每页条数，Echo中间件。
