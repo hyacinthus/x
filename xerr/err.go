@@ -6,7 +6,7 @@ import (
 
 	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo/v4"
-	cos "github.com/mozillazg/go-cos"
+	cos "github.com/tencentyun/cos-go-sdk-v5"
 )
 
 // 定义错误
