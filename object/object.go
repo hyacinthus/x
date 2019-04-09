@@ -43,6 +43,11 @@ func New(config *Config) *Client {
 	}
 }
 
+// COS return the origin cos client
+func (c *Client) COS() *cos.Client {
+	return c.client
+}
+
 // Get 获取 cos 对象
 func (c *Client) Get(key string) ([]byte, error) {
 	resp, err := c.client.Object.Get(context.Background(), key, nil)
@@ -59,15 +64,7 @@ func (c *Client) Get(key string) ([]byte, error) {
 
 // Put 写文件
 func (c *Client) Put(key string, f io.Reader) error {
-	opt := &cos.ObjectPutOptions{
-		ObjectPutHeaderOptions: &cos.ObjectPutHeaderOptions{
-			ContentType: "text/markdown",
-		},
-		ACLHeaderOptions: &cos.ACLHeaderOptions{
-			//XCosACL: "public-read",
-			XCosACL: "private",
-		},
-	}
+	opt := &cos.ObjectPutOptions{}
 	_, err := c.client.Object.Put(context.Background(), key, f, opt)
 	if err != nil {
 		return err
