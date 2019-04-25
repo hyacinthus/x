@@ -14,7 +14,7 @@ var logger *logrus.Logger
 func Get() *logrus.Logger {
 	if logger == nil {
 		logger = logrus.New()
-		logger.SetLevel(logrus.DebugLevel)
+		logger.SetLevel(logrus.InfoLevel)
 	}
 	return logger
 }
