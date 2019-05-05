@@ -18,7 +18,7 @@ type Config struct {
 }
 
 // New 用配置生成一个 redis 数据库 client,若目标数据库未启动会一直等待
-func New(config *Config) *redis.Client {
+func New(config Config) *redis.Client {
 	var kv = redis.NewClient(&redis.Options{
 		Addr:     config.Host + ":" + config.Port,
 		Password: config.Password,

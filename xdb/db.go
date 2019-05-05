@@ -22,7 +22,7 @@ type Config struct {
 }
 
 // New 用配置生成一个 gorm mysql 数据库对象,若目标数据库未启动会一直等待
-func New(config *Config) *gorm.DB {
+func New(config Config) *gorm.DB {
 	var db *gorm.DB
 	var err error
 
