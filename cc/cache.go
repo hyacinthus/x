@@ -1,3 +1,4 @@
+// Package cc 将要废弃，使用 xcache 返回客户端的版本
 package cc
 
 import (
