@@ -34,6 +34,7 @@ func New(provider Provider, bucket string, config Config) Client {
 	switch provider {
 	case ProviderCOS:
 		return newCosClient(bucket, config)
+	default:
+		panic("invalid provider")
 	}
-	return nil
 }
