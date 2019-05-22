@@ -1,3 +1,4 @@
+// Package xnsq 将要废弃，使用 xmq
 package xnsq
 
 import (
