@@ -5,6 +5,7 @@ import (
 
 	"time"
 
+	"github.com/levigross/grequests"
 	nsq "github.com/nsqio/go-nsq"
 	"github.com/sirupsen/logrus"
 )
@@ -83,4 +84,15 @@ func (c *nsqClient) Delay(topic string, payload interface{}, delay time.Duration
 		return err
 	}
 	return c.producer.DeferredPublish(topic, delay, data)
+}
+
+// CreateTopic create a topic on nsqd by http request
+func (c *nsqClient) CreateTopic(topic string) error {
+	resp, err := grequests.Post("http://"+c.config.PubHost+":"+c.config.PubHTTP+"/topic/create",
+		&grequests.RequestOptions{Data: map[string]string{"topic": topic}})
+	if err != nil {
+		return err
+	}
+	log.Info(resp)
+	return nil
 }
