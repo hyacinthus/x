@@ -22,8 +22,11 @@ func (c *nsqContext) Bind(v interface{}) error {
 
 // NSQ 客户端
 type nsqClient struct {
+	// 只有一个生产者
 	producer *nsq.Producer
-	config   Config
+	// 记录所有的消费者，结束时stop
+	consumers []*nsq.Consumer
+	config    Config
 }
 
 // 新建客户端
@@ -40,6 +43,7 @@ func newNSQClient(config Config) Client {
 	}
 	c.producer.SetLogger(NewLogrusLoggerAtLevel(logrus.WarnLevel))
 	log.Info("NSQ Producer 初始化完成。")
+	c.consumers = make([]*nsq.Consumer, 0)
 	return c
 }
 
@@ -59,6 +63,7 @@ func (c *nsqClient) Sub(topic, channel string, handler HandlerFunc) {
 	if err != nil {
 		log.WithError(err).Panic("init nsq comsumer failed")
 	}
+	c.consumers = append(c.consumers, q)
 	q.SetLogger(NewLogrusLoggerAtLevel(logrus.WarnLevel))
 	q.AddHandler(decorate(handler))
 	err = q.ConnectToNSQLookupd(c.config.SubHost + ":" + c.config.SubHTTP)
@@ -95,4 +100,12 @@ func (c *nsqClient) CreateTopic(topic string) error {
 	}
 	log.Info(resp)
 	return nil
+}
+
+// Close graceful shutdown
+func (c *nsqClient) Close() {
+	for _, consumer := range c.consumers {
+		consumer.Stop()
+	}
+	c.producer.Stop()
 }

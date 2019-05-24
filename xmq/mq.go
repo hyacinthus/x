@@ -38,6 +38,8 @@ type Client interface {
 	Sub(topic, channel string, f HandlerFunc)
 	// 创建主题
 	CreateTopic(topic string) error
+	// 清理网络资源
+	Close()
 }
 
 // New 新建存储客户端，为了混用不同的基础施舍，供应商和bucket在调用时填写，不放在设置中。
