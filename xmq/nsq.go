@@ -20,6 +20,11 @@ func (c *nsqContext) Bind(v interface{}) error {
 	return json.Unmarshal(c.msg.Body, v)
 }
 
+// Data origin payload data
+func (c *nsqContext) Data() []byte {
+	return c.msg.Body
+}
+
 // NSQ 客户端
 type nsqClient struct {
 	// 只有一个生产者

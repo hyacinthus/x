@@ -35,7 +35,7 @@ require (
 	github.com/labstack/echo/v4 v4.1.5
 	github.com/levigross/grequests v0.0.0-20190130132859-37c80f76a0da
 	github.com/lib/pq v1.1.1 // indirect
-	github.com/mattn/go-isatty v0.0.8 // indirect
+	github.com/mattn/go-colorable v0.1.2 // indirect
 	github.com/mozillazg/go-cos v0.12.0
 	github.com/nsqio/go-nsq v1.0.7
 	github.com/onsi/ginkgo v1.8.0 // indirect
@@ -43,29 +43,29 @@ require (
 	github.com/pkg/errors v0.8.1 // indirect
 	github.com/prometheus/client_golang v0.9.3 // indirect
 	github.com/prometheus/common v0.4.1 // indirect
-	github.com/prometheus/procfs v0.0.0-20190522114515-bc1a522cf7b1 // indirect
+	github.com/prometheus/procfs v0.0.0-20190529155944-65bdadfa96ae // indirect
 	github.com/prometheus/tsdb v0.8.0 // indirect
 	github.com/rs/xid v1.2.1
 	github.com/sirupsen/logrus v1.4.2
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/stretchr/objx v0.2.0 // indirect
-	github.com/tencentyun/cos-go-sdk-v5 v0.0.0-20190509074957-12be36a1cddf
+	github.com/tencentyun/cos-go-sdk-v5 v0.0.0-20190529075507-68aae1f806e1
 	github.com/vmihailenco/msgpack v4.0.4+incompatible
 	go4.org v0.0.0-20190313082347-94abd6928b1d // indirect
-	golang.org/x/build v0.0.0-20190521164208-6994fc2d58f1 // indirect
+	golang.org/x/build v0.0.0-20190529223741-d1024a741590 // indirect
 	golang.org/x/crypto v0.0.0-20190513172903-22d7a77e9e5f // indirect
 	golang.org/x/exp v0.0.0-20190510132918-efd6b22b2522 // indirect
 	golang.org/x/image v0.0.0-20190523035834-f03afa92d3ff // indirect
 	golang.org/x/lint v0.0.0-20190409202823-959b441ac422 // indirect
 	golang.org/x/mobile v0.0.0-20190509164839-32b2708ab171 // indirect
 	golang.org/x/net v0.0.0-20190522155817-f3200d17e092 // indirect
-	golang.org/x/oauth2 v0.0.0-20190517181255-950ef44c6e07 // indirect
+	golang.org/x/oauth2 v0.0.0-20190523182746-aaccbc9213b0 // indirect
 	golang.org/x/perf v0.0.0-20190501051839-6835260b7148 // indirect
-	golang.org/x/sys v0.0.0-20190522044717-8097e1b27ff5 // indirect
-	golang.org/x/tools v0.0.0-20190521203540-521d6ed310dd // indirect
+	golang.org/x/sys v0.0.0-20190529164535-6a60838ec259 // indirect
+	golang.org/x/tools v0.0.0-20190530043710-12d73424210d // indirect
 	google.golang.org/appengine v1.6.0 // indirect
 	google.golang.org/genproto v0.0.0-20190522204451-c2c4e71fbf69 // indirect
 	google.golang.org/grpc v1.21.0 // indirect
 	gopkg.in/yaml.v2 v2.2.2
-	honnef.co/go/tools v0.0.0-20190522022531-bad1bd262ba8 // indirect
+	honnef.co/go/tools v0.0.0-20190523083050-ea95bdfd59fc // indirect
 )

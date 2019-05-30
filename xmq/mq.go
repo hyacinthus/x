@@ -57,6 +57,8 @@ type Context interface {
 	// Bind binds the payload body into provided type `i`. The default binder
 	// is based on json.
 	Bind(i interface{}) error
+	// Data show the origin payload data body in message
+	Data() []byte
 }
 
 // HandlerFunc 订阅者处理消息的函数
