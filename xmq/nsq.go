@@ -101,6 +101,7 @@ func (c *nsqClient) CreateTopic(topic string) error {
 	resp, err := grequests.Post("http://"+c.config.PubHost+":"+c.config.PubHTTP+"/topic/create",
 		&grequests.RequestOptions{QueryStruct: map[string]string{"topic": topic}})
 	if err != nil {
+		log.WithError(err).Errorf("创建主题 %s 出错", topic)
 		return err
 	}
 	log.Info(resp)
