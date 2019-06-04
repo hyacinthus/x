@@ -73,7 +73,9 @@ func (c *client) Exists(key string) bool {
 // Delete 清缓存
 func (c *client) Delete(key string) {
 	err := c.codec.Delete(key)
-	if err != nil {
+	if err == cache.ErrCacheMiss {
+		return
+	} else if err != nil {
 		log.WithError(err).WithField("key", key).Error("delete cache faild")
 	}
 }
