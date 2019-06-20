@@ -38,6 +38,9 @@ type Log struct {
 
 // BeforeCreate GORM hook
 func (*Log) BeforeCreate(scope *gorm.Scope) error {
-	scope.SetColumn("ID", xid.New().String())
+	col, ok := scope.FieldByName("ID")
+	if ok && col.IsBlank {
+		col.Set(xid.New().String())
+	}
 	return nil
 }

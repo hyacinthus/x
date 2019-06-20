@@ -12,12 +12,11 @@ require (
 	github.com/Shopify/sarama v1.22.1 // indirect
 	github.com/aclements/go-gg v0.0.0-20170323211221-abd1f791f5ee // indirect
 	github.com/aclements/go-moremath v0.0.0-20190506201756-286cc0be6f75 // indirect
-	github.com/coreos/go-systemd v0.0.0-20190612170431-362f06ec6bc1 // indirect
+	github.com/coreos/go-systemd v0.0.0-20190620071333-e64a0ec8b42a // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/dgryski/go-sip13 v0.0.0-20190329191031-25c5027a8c7b // indirect
 	github.com/eapache/go-resiliency v1.2.0 // indirect
-	github.com/gliderlabs/ssh v0.1.4 // indirect
-	github.com/go-logfmt/logfmt v0.4.0 // indirect
+	github.com/gliderlabs/ssh v0.2.2 // indirect
 	github.com/go-redis/cache v6.4.0+incompatible
 	github.com/go-redis/redis v6.15.2+incompatible
 	github.com/gofrs/uuid v3.2.0+incompatible // indirect
@@ -40,7 +39,7 @@ require (
 	github.com/onsi/ginkgo v1.8.0 // indirect
 	github.com/onsi/gomega v1.5.0 // indirect
 	github.com/pkg/errors v0.8.1 // indirect
-	github.com/prometheus/client_golang v0.9.4 // indirect
+	github.com/prometheus/common v0.6.0 // indirect
 	github.com/prometheus/tsdb v0.8.0 // indirect
 	github.com/rs/xid v1.2.1
 	github.com/sirupsen/logrus v1.4.2
@@ -49,16 +48,16 @@ require (
 	github.com/vmihailenco/msgpack v4.0.4+incompatible
 	go.opencensus.io v0.22.0 // indirect
 	go4.org v0.0.0-20190313082347-94abd6928b1d // indirect
-	golang.org/x/build v0.0.0-20190613164717-2f0768f8d89d // indirect
-	golang.org/x/crypto v0.0.0-20190611184440-5c40567a22f8 // indirect
+	golang.org/x/build v0.0.0-20190616201242-c7084d3a2d60 // indirect
+	golang.org/x/crypto v0.0.0-20190618222545-ea8f1a30c443 // indirect
 	golang.org/x/exp v0.0.0-20190510132918-efd6b22b2522 // indirect
-	golang.org/x/image v0.0.0-20190523035834-f03afa92d3ff // indirect
+	golang.org/x/image v0.0.0-20190618124811-92942e4437e2 // indirect
 	golang.org/x/mobile v0.0.0-20190607214518-6fa95d984e88 // indirect
 	golang.org/x/mod v0.1.0 // indirect
-	golang.org/x/net v0.0.0-20190613194153-d28f0bde5980 // indirect
+	golang.org/x/net v0.0.0-20190619014844-b5b0513f8c1b // indirect
 	golang.org/x/perf v0.0.0-20190501051839-6835260b7148 // indirect
-	golang.org/x/sys v0.0.0-20190614160838-b47fdc937951 // indirect
-	golang.org/x/tools v0.0.0-20190614205625-5aca471b1d59 // indirect
+	golang.org/x/sys v0.0.0-20190620070143-6f217b454f45 // indirect
+	golang.org/x/tools v0.0.0-20190619215442-4adf7a708c2d // indirect
 	google.golang.org/appengine v1.6.1 // indirect
 	google.golang.org/genproto v0.0.0-20190611190212-a7e196e89fd3 // indirect
 	google.golang.org/grpc v1.21.1 // indirect
