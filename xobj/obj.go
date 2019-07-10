@@ -24,8 +24,13 @@ type Config struct {
 
 // Client xobj client
 type Client interface {
+	// 获取一个文件的 ReadCloser ，记得关闭它
+	Reader(key string) (io.ReadCloser, error)
+	// 获取文件
 	Get(key string) ([]byte, error)
+	// 存储文件，不会进行重复检查
 	Put(key string, f io.Reader) error
+	// 删除文件
 	Delete(key string) error
 }
 

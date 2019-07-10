@@ -36,21 +36,24 @@ func newCosClient(bucket string, config Config) Client {
 	}
 }
 
-// Get 获取 cos 对象
 func (c *cosClient) Get(key string) ([]byte, error) {
+	reader, err := c.Reader(key)
+	file, err := ioutil.ReadAll(reader)
+	if err != nil {
+		return nil, err
+	}
+	reader.Close()
+	return file, nil
+}
+
+func (c *cosClient) Reader(key string) (io.ReadCloser, error) {
 	resp, err := c.client.Object.Get(context.Background(), key, nil)
 	if err != nil {
 		return nil, err
 	}
-	bs, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-	resp.Body.Close()
-	return bs, nil
+	return resp.Body, nil
 }
 
-// Put 写文件
 func (c *cosClient) Put(key string, f io.Reader) error {
 	opt := &cos.ObjectPutOptions{}
 	_, err := c.client.Object.Put(context.Background(), key, f, opt)
@@ -60,7 +63,6 @@ func (c *cosClient) Put(key string, f io.Reader) error {
 	return nil
 }
 
-// Delete 删除文件
 func (c *cosClient) Delete(key string) error {
 	_, err := c.client.Object.Delete(context.Background(), key)
 	if err != nil {
