@@ -3,11 +3,16 @@ package xerr
 import (
 	"fmt"
 	"net/http"
+	"runtime/debug"
 
 	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo/v4"
 	cos "github.com/tencentyun/cos-go-sdk-v5"
+
+	"github.com/hyacinthus/x/xlog"
 )
+
+var log = xlog.Get()
 
 // 定义错误
 var (
@@ -47,8 +52,9 @@ func ErrorHandler(err error, c echo.Context) {
 		key  = "ServerError"
 		msg  string
 	)
-	// 二话不说先打日志
-	c.Logger().Error(err.Error())
+	// 这里用自有的日志模块打印日志 c.Logger 只用来打 echo 的请求日志
+	log.WithError(err).Error("error in echo handler")
+	log.Error(debug.Stack())
 
 	if he, ok := err.(*Error); ok {
 		// 我们自定的错误
@@ -81,15 +87,12 @@ func ErrorHandler(err error, c echo.Context) {
 	// 判断 context 是否已经返回了
 	if !c.Response().Committed {
 		if c.Request().Method == echo.HEAD {
-			err := c.NoContent(code)
-			if err != nil {
-				c.Logger().Error(err.Error())
-			}
+			err = c.NoContent(code)
 		} else {
-			err := c.JSON(code, New(code, key, msg))
-			if err != nil {
-				c.Logger().Error(err.Error())
-			}
+			err = c.JSON(code, New(code, key, msg))
+		}
+		if err != nil {
+			c.Logger().Error(err.Error())
 		}
 	}
 }
