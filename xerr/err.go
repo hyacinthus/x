@@ -31,12 +31,21 @@ type Error struct {
 	Message string `json:"message"`
 }
 
-// New 新建一个 Error 对象
+// New 新建一个 Error
 func New(code int, key string, msg string) *Error {
 	return &Error{
 		code:    code,
 		Key:     key,
 		Message: msg,
+	}
+}
+
+// Newf 新建一个带格式的 Error
+func Newf(code int, key string, format string, a ...interface{}) *Error {
+	return &Error{
+		code:    code,
+		Key:     key,
+		Message: fmt.Sprintf(format, a...),
 	}
 }
 
