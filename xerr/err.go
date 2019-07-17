@@ -1,10 +1,8 @@
 package xerr
 
 import (
-	"bytes"
 	"fmt"
 	"net/http"
-	"runtime/debug"
 
 	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo/v4"
@@ -64,7 +62,6 @@ func ErrorHandler(err error, c echo.Context) {
 	)
 	// 这里用自有的日志模块打印日志 c.Logger 只用来打 echo 的请求日志
 	log.WithError(err).Error("error in echo handler")
-	log.Errorf("%s", bytes.Join(bytes.Split(debug.Stack(), []byte("\n")), []byte("\n")))
 
 	if he, ok := err.(*Error); ok {
 		// 我们自定的错误
