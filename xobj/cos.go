@@ -38,6 +38,9 @@ func newCosClient(bucket string, config Config) Client {
 
 func (c *cosClient) Get(key string) ([]byte, error) {
 	reader, err := c.Reader(key)
+	if err != nil {
+		return nil, err
+	}
 	file, err := ioutil.ReadAll(reader)
 	if err != nil {
 		return nil, err
