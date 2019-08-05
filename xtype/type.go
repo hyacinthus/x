@@ -207,10 +207,10 @@ func (t *Strings) UnmarshalYAML(data []byte) error {
 
 // Scan implements the Scanner interface.
 func (t *Strings) Scan(src interface{}) error {
+	*t = make([]string, 0)
 	if src == nil {
 		return nil
 	}
-	*t = make([]string, 0)
 	tmp, ok := src.([]byte)
 	if !ok {
 		return errors.New("Read tags from DB failed")
@@ -276,10 +276,10 @@ func (t *Numbers) UnmarshalJSON(data []byte) error {
 
 // Scan implements the Scanner interface.
 func (t *Numbers) Scan(src interface{}) error {
+	*t = make([]int, 0)
 	if src == nil {
 		return nil
 	}
-	*t = make([]int, 0)
 	tmp, ok := src.([]byte)
 	if !ok {
 		return errors.New("Read tags from DB failed")
