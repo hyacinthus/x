@@ -172,7 +172,7 @@ func (t Strings) Intersectant(s Strings) bool {
 // MarshalJSON 转换为json类型
 func (t Strings) MarshalJSON() ([]byte, error) {
 	if t == nil {
-		return []byte("null"), nil
+		return []byte("[]"), nil
 	}
 	return json.Marshal([]string(t))
 }
@@ -259,7 +259,7 @@ func (t Numbers) Exists(s int) bool {
 // MarshalJSON 转换为json类型 加域名
 func (t Numbers) MarshalJSON() ([]byte, error) {
 	if t == nil {
-		return []byte("null"), nil
+		return []byte("[]"), nil
 	}
 	return json.Marshal([]int(t))
 }
