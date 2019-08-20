@@ -32,6 +32,12 @@ type Client interface {
 	LPush(key, item string) error
 	// LRemove 删除列表中的指定元素
 	LRemove(key, item string) error
+	// SGet 获取集合
+	SGet(key string) (xtype.Strings, error)
+	// SAdd 为集合增加一个元素
+	SAdd(key, item string) error
+	// SRemove 删除集合中的指定元素
+	SRemove(key, item string) error
 }
 
 // client 缓存客户端

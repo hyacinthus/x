@@ -18,7 +18,7 @@ func (c *client) SAdd(key, item string) error {
 	return c.kv.SAdd(key, item).Err()
 }
 
-// LRemove 删除集合中的指定元素
+// SRemove 删除集合中的指定元素
 func (c *client) SRemove(key, item string) error {
 	return c.kv.SRem(key, item).Err()
 }
