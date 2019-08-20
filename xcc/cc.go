@@ -4,6 +4,8 @@ package xcc
 import (
 	"time"
 
+	"github.com/hyacinthus/x/xtype"
+
 	"github.com/go-redis/cache"
 	"github.com/go-redis/redis"
 	"github.com/hyacinthus/x/xlog"
@@ -24,6 +26,12 @@ type Client interface {
 	Delete(key string)
 	// Clean 批量清除一类缓存
 	Clean(cate string)
+	// LGet 获取列表
+	LGet(key string) (xtype.Strings, error)
+	// LPush 为列表右侧增加一个元素
+	LPush(key, item string) error
+	// LRemove 删除列表中的指定元素
+	LRemove(key, item string) error
 }
 
 // client 缓存客户端
