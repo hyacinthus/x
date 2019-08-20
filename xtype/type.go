@@ -186,6 +186,17 @@ func (t Strings) SAdd(s string) Strings {
 	return append(t, s)
 }
 
+// Remove 移除所有值为 s 的元素
+func (t Strings) Remove(s string) Strings {
+	tmp := make(Strings, 0, len(t))
+	for _, tt := range t {
+		if tt != s {
+			tmp = append(tmp, tt)
+		}
+	}
+	return tmp
+}
+
 // Union 返回并集，t若有重复不会被去重
 func (t Strings) Union(s Strings) Strings {
 	for _, ss := range s {
