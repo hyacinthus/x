@@ -148,7 +148,18 @@ func (t Strings) String() string {
 }
 
 // Exists 元素是否存在
+// TODO: 待废弃，改名 Contains
 func (t Strings) Exists(s string) bool {
+	for _, item := range t {
+		if item == s {
+			return true
+		}
+	}
+	return false
+}
+
+// Contains 是否包含元素
+func (t Strings) Contains(s string) bool {
 	for _, item := range t {
 		if item == s {
 			return true
@@ -159,14 +170,28 @@ func (t Strings) Exists(s string) bool {
 
 // Intersectant 是否有交集
 func (t Strings) Intersectant(s Strings) bool {
-	for _, tt := range t {
-		for _, ss := range s {
-			if tt == ss {
-				return true
-			}
+	for _, ss := range s {
+		if t.Contains(ss) {
+			return true
 		}
 	}
 	return false
+}
+
+// SAdd 添加不重复的元素
+func (t Strings) SAdd(s string) Strings {
+	if t.Contains(s) {
+		return t
+	}
+	return append(t, s)
+}
+
+// Union 返回并集，t若有重复不会被去重
+func (t Strings) Union(s Strings) Strings {
+	for _, ss := range s {
+		t = t.SAdd(ss)
+	}
+	return t
 }
 
 // MarshalJSON 转换为json类型
@@ -247,7 +272,18 @@ func (t Numbers) String() string {
 }
 
 // Exists 元素是否存在
+// TODO: 待废弃 改为Contains
 func (t Numbers) Exists(s int) bool {
+	for _, item := range t {
+		if item == s {
+			return true
+		}
+	}
+	return false
+}
+
+// Contains 是否包含元素
+func (t Numbers) Contains(s int) bool {
 	for _, item := range t {
 		if item == s {
 			return true
