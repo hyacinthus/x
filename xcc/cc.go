@@ -94,6 +94,11 @@ func (c *client) Delete(key string) {
 	}
 }
 
+// Expire 刷新过期时间
+func (c *client) Expire(key string, ex time.Duration) error {
+	return c.kv.Expire(key, ex).Err()
+}
+
 // Clean 批量清除一类缓存
 func (c *client) Clean(cate string) {
 	if cate == "" {
