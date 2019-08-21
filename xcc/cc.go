@@ -22,6 +22,8 @@ type Client interface {
 	Get(key string, pointer interface{}) error
 	// Exists 是否存在
 	Exists(key string) bool
+	// Expire 刷新过期时间
+	Expire(key string, ex time.Duration) error
 	// Delete 清缓存
 	Delete(key string)
 	// Clean 批量清除一类缓存
@@ -36,6 +38,8 @@ type Client interface {
 	SGet(key string) (xtype.Strings, error)
 	// SAdd 为集合增加一个元素
 	SAdd(key, item string) error
+	// SAdd 为集合增加一个元素，并刷新过期时间
+	SAddEx(key, item string, ex time.Duration) error
 	// SRemove 删除集合中的指定元素
 	SRemove(key, item string) error
 }
