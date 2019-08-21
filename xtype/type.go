@@ -205,6 +205,14 @@ func (t Strings) Union(s Strings) Strings {
 	return t
 }
 
+// Sub 返回集合 t 减掉 s 后的集合
+func (t Strings) Sub(s Strings) Strings {
+	for _, ss := range s {
+		t = t.Remove(ss)
+	}
+	return t
+}
+
 // MarshalJSON 转换为json类型
 func (t Strings) MarshalJSON() ([]byte, error) {
 	if t == nil {

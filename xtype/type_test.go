@@ -20,4 +20,5 @@ func TestStrings(t *testing.T) {
 	assert.Equal(t, src.Union(s1), Strings{"a", "b", "c", "d", "e"})
 	assert.Equal(t, src.Union(s2), Strings{"a", "b", "c", "d", "e", "f"})
 	assert.Equal(t, src.Remove("a"), Strings{"b", "c"})
+	assert.Equal(t, src.Sub(s1), Strings{"a", "b"})
 }
