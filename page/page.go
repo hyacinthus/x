@@ -7,6 +7,13 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// Parse 帮助解析分页中间件的计算值
+func Parse(c echo.Context) (offset, limit int) {
+	offset = c.Get("offset").(int)
+	limit = c.Get("limit").(int)
+	return
+}
+
 // Middleware 获得页码，每页条数，Echo中间件。
 func Middleware(defaultSize int) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
