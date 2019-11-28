@@ -18,8 +18,14 @@ var log = xlog.Get()
 type Client interface {
 	// Set 写缓存
 	Set(key string, object interface{}, exp time.Duration)
+	// MustSet 写缓存,并检查错误
+	MustSet(key string, object interface{}, exp time.Duration) error
 	// Get 读缓存
 	Get(key string, pointer interface{}) error
+	// SetString 写 string 缓存
+	SetString(key string, s string, exp time.Duration) error
+	// GetString 读 string 缓存
+	GetString(key string) (string, error)
 	// Exists 是否存在
 	Exists(key string) bool
 	// Expire 刷新过期时间
@@ -74,13 +80,32 @@ func (c *client) Set(key string, object interface{}, exp time.Duration) {
 		Expiration: exp,
 	})
 	if err != nil {
-		log.WithError(err).WithField("key", key).Error("set cache faild")
+		log.WithError(err).WithField("key", key).Error("set cache failed")
 	}
+}
+
+// MustSet 写缓存,检查并返回错误
+func (c *client) MustSet(key string, object interface{}, exp time.Duration) error {
+	return c.codec.Set(&cache.Item{
+		Key:        key,
+		Object:     object,
+		Expiration: exp,
+	})
 }
 
 // Get 读缓存
 func (c *client) Get(key string, pointer interface{}) error {
 	return c.codec.Get(key, pointer)
+}
+
+// Set 写 string 缓存
+func (c *client) SetString(key string, s string, exp time.Duration) error {
+	return c.kv.Set(key, s, exp).Err()
+}
+
+// Get 读 string 缓存
+func (c *client) GetString(key string) (string, error) {
+	return c.kv.Get(key).Result()
 }
 
 // Exists 是否存在
@@ -94,7 +119,7 @@ func (c *client) Delete(key string) {
 	if err == cache.ErrCacheMiss {
 		return
 	} else if err != nil {
-		log.WithError(err).WithField("key", key).Error("delete cache faild")
+		log.WithError(err).WithField("key", key).Error("delete cache failed")
 	}
 }
 
@@ -113,7 +138,7 @@ func (c *client) Clean(cate string) {
 	for _, key := range c.kv.Keys(cate + "*").Val() {
 		err := c.codec.Delete(key)
 		if err != nil {
-			log.WithError(err).WithField("key", key).Error("delete cache faild,stop batch delete")
+			log.WithError(err).WithField("key", key).Error("delete cache failed,stop batch delete")
 			break
 		}
 		i++
