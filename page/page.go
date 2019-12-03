@@ -7,6 +7,8 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// TODO: 无差别通过中间件分页在性能上不划算，因为需要分页的接口比例不高。此方式已废弃，不要再使用。
+
 // Parse 帮助解析分页中间件的计算值
 func Parse(c echo.Context) (offset, limit int) {
 	offset = c.Get("offset").(int)
