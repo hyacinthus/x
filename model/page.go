@@ -14,17 +14,16 @@ type Paginator struct {
 	PerPage string `query:"per_page"`
 }
 
-// Apply 将翻页信息应用的数据库查询，并在 echo Context 中添加相应 Header
-func (p Paginator) Apply(tx *gorm.DB, c echo.Context) (*gorm.DB, error) {
-	var page, pageSize int
-	var err error
+// parse 解析分页参数字符串到数字
+func (p Paginator) parse() (page, pageSize int, err error) {
 	// 获得页码
 	if p.Page == "" {
 		page = 1
 	} else {
 		page, err = strconv.Atoi(p.Page)
 		if err != nil {
-			return nil, xerr.New(400, "InvalidPage", "请在URL中提供合法的页码")
+			err = xerr.New(400, "InvalidPage", "请在URL中提供合法的页码")
+			return
 		}
 	}
 	// 获得每页条数
@@ -35,12 +34,27 @@ func (p Paginator) Apply(tx *gorm.DB, c echo.Context) (*gorm.DB, error) {
 	} else {
 		pageSize, err = strconv.Atoi(p.PerPage)
 		if err != nil {
-			return nil, xerr.New(400, "InvalidPage", "请在URL中提供合法的每页条数")
+			err = xerr.New(400, "InvalidPage", "请在URL中提供合法的每页条数")
+			return
 		}
 	}
-	// 设置返回的Header
-	c.Response().Header().Set("X-Page-Num", strconv.Itoa(page))
-	c.Response().Header().Set("X-Page-Size", strconv.Itoa(pageSize))
+	return
+}
+
+// Apply 将翻页信息应用的数据库查询，并在 echo Context 中添加相应 Header
+func (p Paginator) Apply(tx *gorm.DB) (*gorm.DB, error) {
+	page, pageSize, err := p.parse()
+	if err != nil {
+		return nil, err
+	}
 	// 返回加过页码的数据库查询
 	return tx.Offset((page - 1) * pageSize).Limit(pageSize), nil
+}
+
+// AddHeader 增加分页相关的响应 header
+func (p Paginator) AddHeader(c echo.Context) {
+	// 这里不用捕获错误，如果有错误，在 Apply 的时候会报出来
+	page, pageSize, _ := p.parse()
+	c.Response().Header().Set("X-Page-Num", strconv.Itoa(page))
+	c.Response().Header().Set("X-Page-Size", strconv.Itoa(pageSize))
 }
