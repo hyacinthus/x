@@ -10,6 +10,7 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
+// TODO: 将项目特有信息排除
 const (
 	imgprefix  = "https://image.xuebaox.com/"
 	fileprefix = "https://static.xuebaox.com/"
@@ -34,10 +35,7 @@ func (f ImageURL) String() string {
 // IsEmpty 是否为空
 func (f ImageURL) IsEmpty() bool {
 	s := string(f)
-	if s == "" {
-		return true
-	}
-	return false
+	return s == ""
 }
 
 // MarshalJSON 转换为json类型 加域名
@@ -94,10 +92,7 @@ func (f FileURL) String() string {
 // IsEmpty 是否为空
 func (f FileURL) IsEmpty() bool {
 	s := string(f)
-	if s == "" {
-		return true
-	}
-	return false
+	return s == ""
 }
 
 // MarshalJSON 转换为json类型 加域名

@@ -23,7 +23,7 @@ type Entity struct {
 func (*Entity) BeforeCreate(scope *gorm.Scope) error {
 	col, ok := scope.FieldByName("ID")
 	if ok && col.IsBlank {
-		col.Set(xid.New().String())
+		return col.Set(xid.New().String())
 	}
 	return nil
 }
@@ -42,7 +42,7 @@ type Addon struct {
 func (*Addon) BeforeCreate(scope *gorm.Scope) error {
 	col, ok := scope.FieldByName("ID")
 	if ok && col.IsBlank {
-		col.Set(xid.New().String())
+		return col.Set(xid.New().String())
 	}
 	return nil
 }
@@ -59,7 +59,7 @@ type Log struct {
 func (*Log) BeforeCreate(scope *gorm.Scope) error {
 	col, ok := scope.FieldByName("ID")
 	if ok && col.IsBlank {
-		col.Set(xid.New().String())
+		return col.Set(xid.New().String())
 	}
 	return nil
 }
