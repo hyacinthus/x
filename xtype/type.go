@@ -119,7 +119,7 @@ func (f *FileURL) Scan(src interface{}) error {
 	}
 	tmp, ok := src.([]byte)
 	if !ok {
-		return errors.New("Read file url data from DB failed")
+		return errors.New("read file url data from DB failed")
 	}
 	*f = FileURL(tmp)
 	return nil

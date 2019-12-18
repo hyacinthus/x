@@ -19,7 +19,7 @@ require (
 	github.com/levigross/grequests v0.0.0-20190908174114-253788527a1a
 	github.com/lib/pq v1.2.0 // indirect
 	github.com/mattn/go-colorable v0.1.4 // indirect
-	github.com/mattn/go-isatty v0.0.10 // indirect
+	github.com/mattn/go-isatty v0.0.11 // indirect
 	github.com/nsqio/go-nsq v1.0.7
 	github.com/onsi/ginkgo v1.9.0 // indirect
 	github.com/onsi/gomega v1.6.0 // indirect
@@ -27,13 +27,13 @@ require (
 	github.com/sirupsen/logrus v1.4.2
 	github.com/stretchr/objx v0.2.0 // indirect
 	github.com/stretchr/testify v1.4.0
-	github.com/tencentyun/cos-go-sdk-v5 v0.0.0-20191108095731-8ca4b370cde4
+	github.com/tencentyun/cos-go-sdk-v5 v0.0.0-20191218071023-4e467b3cf665
 	github.com/valyala/fasttemplate v1.1.0 // indirect
 	github.com/vmihailenco/msgpack v4.0.4+incompatible
 	golang.org/x/crypto v0.0.0-20191206172530-e9b2fee46413 // indirect
 	golang.org/x/mobile v0.0.0-20190814143026-e8b3e6111d02 // indirect
-	golang.org/x/net v0.0.0-20191207000613-e7e4b65ae663 // indirect
-	golang.org/x/sys v0.0.0-20191206220618-eeba5f6aabab // indirect
+	golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553 // indirect
+	golang.org/x/sys v0.0.0-20191218084908-4a24b4065292 // indirect
 	golang.org/x/tools v0.0.0-20190820033707-85edb9ef3283 // indirect
 	google.golang.org/appengine v1.6.5 // indirect
 	google.golang.org/genproto v0.0.0-20190819201941-24fa4b261c55 // indirect
