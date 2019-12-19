@@ -59,6 +59,9 @@ func ParsePolygon(src string) (Polygon,error) {
 
 // MarshalJSON 转换为json类型
 func (p Polygon) MarshalJSON() ([]byte, error) {
+	if p == nil {
+		return nil,nil
+	}
 	return json.Marshal(p)
 }
 
