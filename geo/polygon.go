@@ -80,11 +80,11 @@ func (p *Polygon) Scan(src interface{}) error {
 	if src == nil {
 		return nil
 	}
-	tmp, ok := src.(string)
+	tmp, ok := src.([]byte)
 	if !ok {
 		return errors.New("read geo polygon data from DB failed")
 	}
-	polygon, err := ParsePolygon(tmp)
+	polygon, err := ParsePolygon(string(tmp))
 	if err != nil {
 		return err
 	}

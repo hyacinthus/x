@@ -65,11 +65,11 @@ func (p *Point) Scan(src interface{}) error {
 	if src == nil {
 		return nil
 	}
-	tmp, ok := src.(string)
+	tmp, ok := src.([]byte)
 	if !ok {
 		return errors.New("read geo point data from DB failed")
 	}
-	point, err := ParsePoint(tmp)
+	point, err := ParsePoint(string(tmp))
 	if err != nil {
 		return err
 	}
