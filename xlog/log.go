@@ -1,5 +1,5 @@
 // Package xlog 会
-// 返回一个固定的 logrus loggger
+// 返回一个固定的 logrus logger
 // 可以自己用 也可以传给别的应用
 // 用来统一日志格式
 package xlog
