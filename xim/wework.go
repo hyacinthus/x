@@ -1,4 +1,4 @@
-package work
+package xim
 
 import (
 	"fmt"
