@@ -21,6 +21,9 @@ func Get() *logrus.Logger {
 
 // Debug 将logger设置为debug模式
 func Debug() {
+	if logger == nil {
+		logger = logrus.New()
+	}
 	logger.SetFormatter(&logrus.TextFormatter{
 		TimestampFormat: "06-01-02 15:04:05",
 	})
