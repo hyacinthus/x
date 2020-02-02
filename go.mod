@@ -18,6 +18,7 @@ require (
 	github.com/levigross/grequests v0.0.0-20190908174114-253788527a1a
 	github.com/lib/pq v1.2.0 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
+	github.com/mitchellh/hashstructure v1.0.0
 	github.com/nsqio/go-nsq v1.0.8
 	github.com/onsi/ginkgo v1.9.0 // indirect
 	github.com/onsi/gomega v1.6.0 // indirect
