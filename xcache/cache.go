@@ -4,10 +4,10 @@ package xcache
 import (
 	"time"
 
-	"github.com/go-redis/cache"
-	"github.com/go-redis/redis"
+	"github.com/go-redis/cache/v7"
+	"github.com/go-redis/redis/v7"
 	"github.com/hyacinthus/x/xlog"
-	"github.com/vmihailenco/msgpack"
+	"github.com/vmihailenco/msgpack/v4"
 )
 
 var log = xlog.Get()
