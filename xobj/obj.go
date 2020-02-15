@@ -28,8 +28,10 @@ type Client interface {
 	Reader(key string) (io.ReadCloser, error)
 	// 获取文件
 	Get(key string) ([]byte, error)
-	// 存储文件，不会进行重复检查
+	// 存储文件，不会进行重复检查，注意 reader 必须会自己 EOF
 	Put(key string, f io.Reader) error
+	// 存储带类型的文件
+	PutFile(key, name, contentType string, f io.Reader, contentLength int) error
 	// 删除文件
 	Delete(key string) error
 }

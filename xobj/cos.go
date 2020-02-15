@@ -57,8 +57,20 @@ func (c *cosClient) Reader(key string) (io.ReadCloser, error) {
 	return resp.Body, nil
 }
 
+// 上传只是程序内部读取的文件
 func (c *cosClient) Put(key string, f io.Reader) error {
-	opt := &cos.ObjectPutOptions{}
+	return c.PutFile(key, "", "", f, 0)
+}
+
+// 上传对下载友好的文件
+func (c *cosClient) PutFile(key, name, contentType string, f io.Reader, contentLength int) error {
+	opt := &cos.ObjectPutOptions{
+		ObjectPutHeaderOptions: &cos.ObjectPutHeaderOptions{
+			ContentDisposition: name,
+			ContentType:        contentType,
+			ContentLength:      contentLength,
+		},
+	}
 	_, err := c.client.Object.Put(context.Background(), key, f, opt)
 	if err != nil {
 		return err
