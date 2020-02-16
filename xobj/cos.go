@@ -66,7 +66,7 @@ func (c *cosClient) Put(key string, f io.Reader) error {
 func (c *cosClient) PutFile(key, name, contentType string, f io.Reader, contentLength int) error {
 	opt := &cos.ObjectPutOptions{
 		ObjectPutHeaderOptions: &cos.ObjectPutHeaderOptions{
-			ContentDisposition: name,
+			ContentDisposition: fmt.Sprintf(`attachment; filename="%s"`, name),
 			ContentType:        contentType,
 			ContentLength:      contentLength,
 		},
