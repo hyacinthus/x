@@ -2,6 +2,8 @@
   <dictionary name="hyaci">
     <words>
       <w>errorf</w>
+      <w>estiblish</w>
+      <w>httpc</w>
       <w>infof</w>
       <w>logrus</w>
       <w>msgtype</w>
