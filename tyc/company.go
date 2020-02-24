@@ -2,6 +2,7 @@ package tyc
 
 import (
 	"net/url"
+	"time"
 
 	"github.com/hyacinthus/x/xerr"
 
@@ -37,5 +38,7 @@ func (c *Client) FetchCompany(name string) (*Company, error) {
 	if resp.ErrorCode != 0 {
 		return nil, xerr.Newf(500, "TycError", "请求[%s]企业天眼查企业数据报错: %d %s", name, resp.ErrorCode, resp.Reason)
 	}
+
+	resp.Result.TycUpdatedAt = time.Now()
 	return resp.Result, nil
 }
