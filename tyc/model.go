@@ -1,10 +1,7 @@
 package tyc
 
 import (
-	"strings"
 	"time"
-
-	"github.com/hyacinthus/x/xtype"
 )
 
 // CompanyRest 天眼查返回结构
@@ -125,19 +122,4 @@ func (c *Company) ProvinceBase() string {
 // RegLocationText copier
 func (c *Company) RegLocationText() string {
 	return c.RegLocation
-}
-
-// TycTags copier
-func (c *Company) TycTags() xtype.JStrings {
-	tmp := strings.Trim(c.Tags, ";")
-	tmp = strings.TrimSpace(tmp)
-	if tmp == "" {
-		return nil
-	}
-	list := strings.Split(tmp, ";")
-	resp := xtype.JStrings{}
-	for _, item := range list {
-		resp.SAdd(strings.TrimSpace(item))
-	}
-	return resp
 }
