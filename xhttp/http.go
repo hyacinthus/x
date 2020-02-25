@@ -14,3 +14,8 @@ func init() {
 		Timeout: time.Second * 5,
 	}
 }
+
+// SetTimeout 设置全局 http 客户端的超时时间
+func SetTimeout(seconds int) {
+	Client.Timeout = time.Second * time.Duration(seconds)
+}
