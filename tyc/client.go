@@ -2,11 +2,9 @@ package tyc
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/hyacinthus/x/xerr"
-
-	"github.com/levigross/grequests"
+	"github.com/hyacinthus/x/xhttp"
 )
 
 // 错误
@@ -23,15 +21,16 @@ type Config struct {
 
 // Client 维持一个持久化的 http client ，避免每次都重建
 type Client struct {
-	httpc *http.Client
+	httpc  *http.Client
+	config Config
 }
 
 // NewClient create a 天眼查 client
+// 注意： 调用这个方法 会将 xhttp 包的全局 http client 超时调整为这里指定的值
 func NewClient(config Config) *Client {
-	return &Client{httpc: grequests.BuildHTTPClient(grequests.RequestOptions{
-		Headers: map[string]string{
-			"Authorization": config.Token,
-		},
-		RequestTimeout: time.Second * time.Duration(config.Timeout),
-	})}
+	xhttp.SetTimeout(config.Timeout)
+	return &Client{
+		httpc:  xhttp.Client,
+		config: config,
+	}
 }

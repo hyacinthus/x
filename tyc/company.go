@@ -20,6 +20,9 @@ func (c *Client) FetchCompany(name string) (*Company, error) {
 	params.Set("name", name)
 	data, err := grequests.Get("http://open.api.tianyancha.com/services/open/ic/baseinfo/2.0",
 		&grequests.RequestOptions{
+			Headers: map[string]string{
+				"Authorization": c.config.Token,
+			},
 			Params:     map[string]string{"name": name},
 			HTTPClient: c.httpc,
 		})
