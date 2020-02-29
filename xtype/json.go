@@ -41,7 +41,7 @@ func (t JStrings) Intersectant(s JStrings) bool {
 	return false
 }
 
-// SAdd 添加不重复的元素
+// SAdd 添加不重复的元素 注意！t不会改变，新的列表将被返回
 func (t JStrings) SAdd(s string) JStrings {
 	if t.Contains(s) {
 		return t
