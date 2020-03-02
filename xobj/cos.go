@@ -10,6 +10,8 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/labstack/gommon/log"
+
 	cos "github.com/tencentyun/cos-go-sdk-v5"
 )
 
@@ -84,4 +86,14 @@ func (c *cosClient) Delete(key string) error {
 		return err
 	}
 	return nil
+}
+
+// Exists 腾讯云的 SDK 暂时不支持将不存在的情况分拣出来，目前出错了也不返回错误。
+func (c *cosClient) Exists(key string) (bool, error) {
+	_, err := c.client.Object.Head(context.Background(), key, nil)
+	if err != nil {
+		log.Errorf("COS发生了预期外的错误，请注意。Key： %s， Error： %s", key, err)
+		return false, nil
+	}
+	return true, nil
 }
