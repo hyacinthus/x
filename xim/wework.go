@@ -2,6 +2,7 @@ package xim
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/levigross/grequests"
 )
@@ -11,12 +12,18 @@ const baseURL = `https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=`
 
 // RobotMsg 群机器人消息
 type RobotMsg struct {
-	MsgType string   `json:"msgtype"`
-	Text    *MsgText `json:"text,omitempty"`
+	MsgType  string       `json:"msgtype"`
+	Text     *MsgText     `json:"text,omitempty"`
+	MarkDown *MsgMarkdown `json:"markdown,omitempty"`
 }
 
 // MsgText 文本消息部分
 type MsgText struct {
+	Content string `json:"content"`
+}
+
+// MsgMarkdown MD消息
+type MsgMarkdown struct {
 	Content string `json:"content"`
 }
 
@@ -62,6 +69,22 @@ func wWarn(args ...interface{}) {
 		log.WithError(err).Error("向企业微信发送紧急通知出错")
 	} else {
 		log.Warnf("发送紧急通知成功：%s", text)
+	}
+}
+
+// wWarnMD 紧急通知 Markdown
+func wWarnMD(lines []string) {
+	content := strings.Join(lines, "\n")
+	err := SendRobotMsg(warnKey, &RobotMsg{
+		MsgType: "markdown",
+		MarkDown: &MsgMarkdown{
+			Content: content,
+		},
+	})
+	if err != nil {
+		log.WithError(err).Error("向企业微信发送紧急通知出错")
+	} else {
+		log.Warnf("发送紧急通知成功：%s", content)
 	}
 }
 

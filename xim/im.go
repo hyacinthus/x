@@ -3,6 +3,7 @@ package xim
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/hyacinthus/x/xlog"
 )
@@ -71,6 +72,15 @@ func Warnf(format string, a ...interface{}) {
 		log.Warnf(format, a...)
 	} else {
 		wWarn(fmt.Sprintf(format, a...))
+	}
+}
+
+// WarnMD Markdown 格式企业微信重要通知,调试模式下只打日志
+func WarnMD(lines []string) {
+	if debug {
+		log.Warn(strings.Join(lines, "\n"))
+	} else {
+		wWarnMD(lines)
 	}
 }
 
