@@ -57,6 +57,15 @@ func Errorf(format string, a ...interface{}) {
 	}
 }
 
+// ErrorMD Markdown 格式企业微信出错通知,调试模式下只打日志
+func ErrorMD(lines []string) {
+	if debug {
+		log.Info(strings.Join(lines, "\n"))
+	} else {
+		wErrorMD(lines)
+	}
+}
+
 // Warn 企业微信重要通知,调试模式下只打日志
 func Warn(args ...interface{}) {
 	if debug {
@@ -99,5 +108,14 @@ func Infof(format string, a ...interface{}) {
 		log.Infof(format, a...)
 	} else {
 		wInfo(fmt.Sprintf(format, a...))
+	}
+}
+
+// InfoMD Markdown 格式企业微信一般通知,调试模式下只打日志
+func InfoMD(lines []string) {
+	if debug {
+		log.Info(strings.Join(lines, "\n"))
+	} else {
+		wInfoMD(lines)
 	}
 }

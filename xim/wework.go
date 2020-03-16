@@ -28,78 +28,86 @@ type MsgMarkdown struct {
 }
 
 // SendRobotMsg 发送机器人消息
-func SendRobotMsg(key string, msg *RobotMsg) error {
+func SendRobotMsg(key, tp, content string) {
+	var msg = &RobotMsg{
+		MsgType: tp,
+	}
+	switch tp {
+	case "text":
+		msg.Text = &MsgText{Content: content}
+	case "markdown":
+		msg.MarkDown = &MsgMarkdown{Content: content}
+	}
 	_, err := grequests.Post(baseURL+key, &grequests.RequestOptions{
 		JSON: msg,
 	})
 	if err != nil {
-		return err
+		log.WithError(err).Errorf("向企业微信发送通知出错:%s", content)
+		return
 	}
-	return nil
+	log.Infof("向企业微信发送通知成功：%s", content)
+}
+
+// SendRobotMarkdown 向机器人发送 Markdown 通知
+func SendRobotMarkdown(key string, lines []string) {
+	// 一次最多4096字 控制一下
+	var buffer = make([]string, 0)
+	var count, times int
+	for _, line := range lines {
+		if len(line) > 4000 {
+			// 单行不能超过4000字
+			log.Error("发送微信消息时单行超过4000字，取消发送，打印如下。")
+			log.Error(strings.Join(lines, "\n"))
+			return
+		}
+		if count+len(line) > 4000 {
+			// 加上这行就超长了，赶紧把之前的打印一下，重新开始积累
+			SendRobotMsg(key, "markdown", strings.Join(buffer, "\n"))
+			buffer = make([]string, 0)
+			count = 0
+			times++
+			if times >= 5 {
+				// 已经发了5次了，太长了，不继续发了
+				log.Error("发送微信消息时满容量发送了5次还未发完，取消后续发送，打印如下。")
+				log.Error(strings.Join(lines, "\n"))
+				return
+			}
+		}
+		buffer = append(buffer, line)
+		count += len(line)
+	}
+	// 最后发送 buffer 中残留的最后一部分
+	SendRobotMsg(key, "markdown", strings.Join(buffer, "\n"))
 }
 
 // =============== 三个通知机器人 出错，紧急和普通 ===================
 
 // wError 程序出错通知
 func wError(args ...interface{}) {
-	text := fmt.Sprint(args...)
-	err := SendRobotMsg(errorKey, &RobotMsg{
-		MsgType: "text",
-		Text: &MsgText{
-			Content: text,
-		},
-	})
-	if err != nil {
-		log.WithError(err).Error("向企业微信发送出错通知出错")
-	} else {
-		log.Errorf("发送出错通知成功：%s", text)
-	}
+	SendRobotMsg(errorKey, "text", fmt.Sprint(args...))
 }
 
 // wWarn 紧急通知
 func wWarn(args ...interface{}) {
-	text := fmt.Sprint(args...)
-	err := SendRobotMsg(warnKey, &RobotMsg{
-		MsgType: "text",
-		Text: &MsgText{
-			Content: text,
-		},
-	})
-	if err != nil {
-		log.WithError(err).Error("向企业微信发送紧急通知出错")
-	} else {
-		log.Warnf("发送紧急通知成功：%s", text)
-	}
-}
-
-// wWarnMD 紧急通知 Markdown
-func wWarnMD(lines []string) {
-	content := strings.Join(lines, "\n")
-	err := SendRobotMsg(warnKey, &RobotMsg{
-		MsgType: "markdown",
-		MarkDown: &MsgMarkdown{
-			Content: content,
-		},
-	})
-	if err != nil {
-		log.WithError(err).Error("向企业微信发送紧急通知出错")
-	} else {
-		log.Warnf("发送紧急通知成功：%s", content)
-	}
+	SendRobotMsg(warnKey, "text", fmt.Sprint(args...))
 }
 
 // wInfo 一般通知
 func wInfo(args ...interface{}) {
-	text := fmt.Sprint(args...)
-	err := SendRobotMsg(infoKey, &RobotMsg{
-		MsgType: "text",
-		Text: &MsgText{
-			Content: text,
-		},
-	})
-	if err != nil {
-		log.WithError(err).Error("向企业微信发送一般通知出错")
-	} else {
-		log.Infof("发送一般通知成功：%s", text)
-	}
+	SendRobotMsg(infoKey, "text", fmt.Sprint(args...))
+}
+
+// wErrorMD 出错通知 Markdown
+func wErrorMD(lines []string) {
+	SendRobotMarkdown(errorKey, lines)
+}
+
+// wWarnMD 紧急通知 Markdown
+func wWarnMD(lines []string) {
+	SendRobotMarkdown(warnKey, lines)
+}
+
+// wInfoMD 一般通知 Markdown
+func wInfoMD(lines []string) {
+	SendRobotMarkdown(infoKey, lines)
 }
