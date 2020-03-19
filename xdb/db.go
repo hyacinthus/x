@@ -17,14 +17,18 @@ type Config struct {
 	Port     string `default:"3306"`
 	User     string `default:"root"`
 	Password string `default:"root"`
-	Name     string `default:"demo"`
-	Lifetime int    `default:"3000"`
+	Name     string
+	Lifetime int `default:"3000"`
 }
 
 // New 用配置生成一个 gorm mysql 数据库对象,若目标数据库未启动会一直等待
 func New(config Config) *gorm.DB {
 	var db *gorm.DB
 	var err error
+
+	if config.Name == "" {
+		panic("请在环境变量提供数据库名")
+	}
 
 	for {
 		db, err = gorm.Open("mysql", config.User+":"+config.Password+
