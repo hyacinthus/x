@@ -20,7 +20,7 @@ require (
 	github.com/stretchr/testify v1.4.0
 	github.com/tencentyun/cos-go-sdk-v5 v0.0.0-20200311031902-5eb2ce1f587d
 	github.com/vmihailenco/msgpack/v4 v4.3.10
-	golang.org/x/crypto v0.0.0-20200311171314-f7b00557c8c4 // indirect
-	golang.org/x/sys v0.0.0-20200302150141-5c8b2ff67527 // indirect
+	golang.org/x/crypto v0.0.0-20200317142112-1b76d66859c6 // indirect
+	golang.org/x/sys v0.0.0-20200317113312-5766fd39f98d // indirect
 	gopkg.in/yaml.v2 v2.2.8
 )
