@@ -19,6 +19,7 @@ var (
 	ErrAuthFailed   = New(401, "AuthFailed", "登录失败")
 	ErrUnauthorized = New(401, "Unauthorized", "本接口只有登录用户才能调用")
 	ErrForbidden    = New(403, "Forbidden", "权限不足")
+	ErrDuplicate    = New(400, "Duplicate", "已有相同业务数据存在")
 )
 
 // Error 对外输出的错误格式
