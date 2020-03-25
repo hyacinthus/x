@@ -25,6 +25,11 @@ func (c *nsqContext) Data() []byte {
 	return c.msg.Body
 }
 
+// String convert origin payload data to string
+func (c *nsqContext) String() string {
+	return string(c.msg.Body)
+}
+
 // NSQ 客户端
 type nsqClient struct {
 	// 只有一个生产者
@@ -66,19 +71,20 @@ func decorate(f HandlerFunc) nsq.HandlerFunc {
 func (c *nsqClient) Sub(topic, channel string, handler HandlerFunc) {
 	q, err := nsq.NewConsumer(topic, channel, nsq.NewConfig())
 	if err != nil {
-		log.WithError(err).Panic("init nsq comsumer failed")
+		log.WithError(err).Panic("init nsq consumer failed")
 	}
 	c.consumers = append(c.consumers, q)
 	q.SetLogger(NewLogrusLoggerAtLevel(logrus.WarnLevel))
 	q.AddHandler(decorate(handler))
 	err = q.ConnectToNSQLookupd(c.config.SubHost + ":" + c.config.SubHTTP)
 	if err != nil {
-		log.WithError(err).Panic("nsq comsumer connect to lookupd failed")
+		log.WithError(err).Panic("nsq consumer connect to lookupd failed")
 	}
 	log.Infof("订阅 nsq topic %s by %s", topic, channel)
 }
 
 // Pub 发布消息，用json编码
+// 因为 json Marshal 一个字符串不会报错，所以也可传入字符串，接收时使用 String() 方法接收
 func (c *nsqClient) Pub(topic string, payload interface{}) error {
 	data, err := json.Marshal(payload)
 	if err != nil {

@@ -59,6 +59,8 @@ type Context interface {
 	Bind(i interface{}) error
 	// Data show the origin payload data body in message
 	Data() []byte
+	// String convert the origin payload data body to string
+	String() string
 }
 
 // HandlerFunc 订阅者处理消息的函数

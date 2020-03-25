@@ -6,7 +6,10 @@
       <w>httpc</w>
       <w>infof</w>
       <w>logrus</w>
+      <w>lookupd</w>
       <w>msgtype</w>
+      <w>nsqd</w>
+      <w>nsqlookupd</w>
       <w>warnf</w>
       <w>webhook</w>
       <w>xhttp</w>
