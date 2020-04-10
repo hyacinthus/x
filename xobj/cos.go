@@ -13,6 +13,8 @@ import (
 	"github.com/labstack/gommon/log"
 
 	cos "github.com/tencentyun/cos-go-sdk-v5"
+
+	"github.com/hyacinthus/x/xerr"
 )
 
 // cosClient 封装的 cos client
@@ -39,6 +41,9 @@ func newCosClient(bucket string, config Config) Client {
 }
 
 func (c *cosClient) Get(key string) ([]byte, error) {
+	if key == "" {
+		return nil, xerr.ErrNotFound
+	}
 	reader, err := c.Reader(key)
 	if err != nil {
 		return nil, err
@@ -52,6 +57,9 @@ func (c *cosClient) Get(key string) ([]byte, error) {
 }
 
 func (c *cosClient) Reader(key string) (io.ReadCloser, error) {
+	if key == "" {
+		return nil, xerr.ErrNotFound
+	}
 	resp, err := c.client.Object.Get(context.Background(), key, nil)
 	if err != nil {
 		return nil, err
@@ -66,6 +74,9 @@ func (c *cosClient) Put(key string, f io.Reader) error {
 
 // 上传对下载友好的文件
 func (c *cosClient) PutFile(key, name, contentType string, f io.Reader, contentLength int) error {
+	if key == "" {
+		return xerr.New(400, "EmptyKey", "empty key")
+	}
 	opt := &cos.ObjectPutOptions{
 		ObjectPutHeaderOptions: &cos.ObjectPutHeaderOptions{
 			ContentDisposition: fmt.Sprintf(`attachment; filename="%s"`, name),
@@ -81,6 +92,9 @@ func (c *cosClient) PutFile(key, name, contentType string, f io.Reader, contentL
 }
 
 func (c *cosClient) Delete(key string) error {
+	if key == "" {
+		return xerr.New(400, "EmptyKey", "empty key")
+	}
 	_, err := c.client.Object.Delete(context.Background(), key)
 	if err != nil {
 		return err
@@ -90,6 +104,9 @@ func (c *cosClient) Delete(key string) error {
 
 // Exists 腾讯云的 SDK 暂时不支持将不存在的情况分拣出来，目前出错了也不返回错误。
 func (c *cosClient) Exists(key string) (bool, error) {
+	if key == "" {
+		return false, xerr.New(400, "EmptyKey", "empty key")
+	}
 	resp, err := c.client.Object.Head(context.Background(), key, nil)
 	if resp != nil && resp.StatusCode == 404 {
 		return false, nil
